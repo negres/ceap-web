@@ -15,7 +15,10 @@ const DeputyDetails = ({ deputy, expenses }: { deputy: any, expenses: any[] }) =
         <CustomAvatar imageUrl={deputy.urlPhoto} />
         <div>
           <Typography fontWeight={600} variant="h5">{deputy.name}</Typography>
-          <Typography variant="h6">Legislatura: {deputy.legislature}</Typography>
+          <Typography variant="h6">
+            Legislatura:
+            {deputy.legislature}
+          </Typography>
         </div>
       </WrapperAvatar>
       <CustomTable deputies={expenses} isSingleData />

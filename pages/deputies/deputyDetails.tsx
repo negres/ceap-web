@@ -8,7 +8,7 @@ import { Wrapper, WrapperAvatar } from 'pages-extras/Deputies/deputyDetails.styl
 
 const CustomTable = dynamic(() => import('components/Table/Table'));
 
-const DeputyDetails = ({ deputy, data }: { deputy: any, expenses: any[] }) => {
+const DeputyDetails = ({ deputy, expenses }: { deputy: any, expenses: any[] }) => {
   return (
     <Wrapper>
       <WrapperAvatar>
@@ -18,7 +18,7 @@ const DeputyDetails = ({ deputy, data }: { deputy: any, expenses: any[] }) => {
           <Typography variant="h6">Legislatura: {deputy.legislature}</Typography>
         </div>
       </WrapperAvatar>
-      <CustomTable deputies={data} isSingleData />
+      <CustomTable deputies={expenses} isSingleData />
       <Link href='/deputados'>Voltar para a listagem de deputados</Link>
     </Wrapper>
   )
@@ -28,9 +28,8 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   const { id } = ctx.query;
   const { data: { deputy = null } } = await getDeputy(id);
   const { data } = await getDeputyExpense(id);
-  console.log(data)
 
-  return { props: { deputy, data } }
+  return { props: { deputy, expenses: data } }
 }
 
 export default DeputyDetails;

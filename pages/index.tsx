@@ -23,7 +23,6 @@ const Home = ({ hasDataCreated }: { hasDataCreated: boolean }) => {
       setIsCreatedData(true);
       setLoading(false);
     }
-    console.log('no fetch')
   };
 
   useEffect(() => {
@@ -50,7 +49,6 @@ const Home = ({ hasDataCreated }: { hasDataCreated: boolean }) => {
 
       await createData(submitValues);
     } catch (error) {
-      console.log(error);
       formik.setSubmitting(false);
     }
   }
@@ -89,7 +87,6 @@ const Home = ({ hasDataCreated }: { hasDataCreated: boolean }) => {
 export const getServerSideProps = async (_ctx: GetServerSidePropsContext) => {
   let hasDataCreated = false;
   const { data: { deputies } } = await getDeputies();
-  console.log(deputies)
   if (deputies.length > 0) {
     hasDataCreated = true;
   }

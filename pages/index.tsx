@@ -26,14 +26,7 @@ const Home = ({ hasDataCreated }: { hasDataCreated: boolean }) => {
   };
 
   useEffect(() => {
-    // fetchData();
-
-    // if (!isCreatedData) {
-    //   setInterval( async () => {
-    //   }, 60000);
-    //   clearInterval();
-    // }
-
+    fetchData();
   }, []);
 
   const initialValues = { file: '' };

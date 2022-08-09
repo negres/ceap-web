@@ -26,8 +26,12 @@ const Home = ({ hasDataCreated }: { hasDataCreated: boolean }) => {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (!isCreatedData) {
+      setInterval(() => {
+        fetchData();
+      }, 120000);
+    }
+  }, [fetchData]);
 
   const initialValues = { file: '' };
 
@@ -39,7 +43,7 @@ const Home = ({ hasDataCreated }: { hasDataCreated: boolean }) => {
 
     try {
       formik.setSubmitting(true);
-
+      console.log(data)
       await createData(submitValues);
     } catch (error) {
       formik.setSubmitting(false);
@@ -64,12 +68,13 @@ const Home = ({ hasDataCreated }: { hasDataCreated: boolean }) => {
       {loading && (
         <div>
           <Typography color="#1976d2">Os dados estão sendo carregados...</Typography>
+          <Typography marginTop="30px">Isso pode demorar um pouco</Typography>
           <Loader />
         </div>
       )}
       {isCreatedData && (
         <>
-          <Typography marginTop="30px">Verificamos que já consta cadastrado os dados dos deputados</Typography>
+          <Typography marginTop="30px">Verificamos que alguns dados já foram carregados</Typography>
           <Link href='/deputados'>Clique aqui para visualizar os deputudos</Link>
         </>
       )}

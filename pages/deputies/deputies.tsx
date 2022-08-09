@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 const CustomTable = dynamic(() => import('components/Table/Table'));
 
 const Deputies = ({ deputies }: { deputies: any[] }) => {
+  console.log(deputies[0])
   return (
     <>
       <Typography variant="h4" align="center">Deputados do Estado do Ceará</Typography>

@@ -9,6 +9,10 @@ const axiosRequest = async ({ endpoint, data, method = 'get', headers, query }: 
     param = `?${stringify(query)}`;
   }
 
+  axios.defaults.headers.common['Content-Type'] = 'application/json';
+
+  console.log(basePath)
+
   return axios(`${basePath}${param}`, { method, data, headers });
 };
 

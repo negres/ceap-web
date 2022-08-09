@@ -4,7 +4,7 @@
   "private": true,
   "engines": {
     "node": "16.15.1 || 16.13.0",
-    "yarn": "1.22.10 || 1.22.17"
+    "yarn": "1.22.10 || 1.22.19"
   },
   "scripts": {
     "dev": "node server.js",
@@ -39,6 +39,10 @@
     "styled-components": "^5.3.5",
     "styled-normalize": "^8.0.6",
     "yup": "^0.29.3"
+  },
+  "resolutions": {
+    "@types/react": "16.7.17",
+    "@types/react-dom": "16.0.11"
   },
   "devDependencies": {
     "@types/enzyme": "^3.10.12",

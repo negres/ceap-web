@@ -20,7 +20,6 @@ import { Link, TableHead, Typography } from '@mui/material';
 import formatDate from 'helpers/formatDate/formatDate';
 
 const CustomTable = ({ deputies, isSingleData }: { deputies: any[], isSingleData?: boolean }) => {
-  console.log(deputies)
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 

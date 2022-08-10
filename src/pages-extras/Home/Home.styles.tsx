@@ -35,3 +35,18 @@ export const Content = styled.div`
     cursor: pointer;
   }
 `;
+
+export const SelectFieldWrapper = styled.div`
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  select {
+    width: 100px;
+    font-size: 16px;
+    padding: 5px;
+    border: 2px solid #24b988;
+    border-radius: 5px;
+  }
+`;

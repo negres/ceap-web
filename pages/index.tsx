@@ -1,5 +1,5 @@
-import { Formik, FormikHelpers } from 'formik';
-import { useEffect, useState } from 'react';
+import { Field, Formik, FormikHelpers } from 'formik';
+import { useState } from 'react';
 import { Button, Form } from 'semantic-ui-react';
 import Link from 'next/link';
 
@@ -8,47 +8,34 @@ import createData from 'actions/importData';
 import Loader from 'components/Loader/Loader';
 import Uploader from 'components/Uploader/Uploader';
 import createFormData from 'helpers/formData/formData';
-import { Content, Wrapper } from 'pages-extras/Home/Home.styles';
+import { Content, SelectFieldWrapper, Wrapper } from 'pages-extras/Home/Home.styles';
 import { Typography } from '@mui/material';
 import { GetServerSidePropsContext } from 'next';
+import Router from 'next/router';
 
 const Home = ({ hasDataCreated }: { hasDataCreated: boolean }) => {
-  const [isCreatedData, setIsCreatedData] = useState(hasDataCreated);
   const [loading, setLoading] = useState(false);
 
-  const fetchData = async () => {
-    const { data: { deputies } } = await getDeputies();
+  const initialValues = { file: '', year: '' };
 
-    if (deputies.length > 0) {
-      setIsCreatedData(true);
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    if (!isCreatedData) {
-      setInterval(() => {
-        fetchData();
-      }, 120000);
-    }
-  }, [fetchData]);
-
-  const initialValues = { file: '' };
-
-  const onSubmit = async (data: any, formik: FormikHelpers<any>) => {
+  const createDataInfos = async (data: any) => {
     let formData = data;
-
-    const submitValues = createFormData(formData, '');
     setLoading(true);
 
+    const submitValues = createFormData(formData, '');
+    await createData(submitValues);
+  };
+
+  const onSubmit = async (data: any, formik: FormikHelpers<any>) => {
     try {
       formik.setSubmitting(true);
-      console.log(data)
-      await createData(submitValues);
+      await createDataInfos(data);
     } catch (error) {
       formik.setSubmitting(false);
+      alert('Dados já adicionados');
+      Router.push(`/deputados`);
     }
-  }
+  };
 
   return (
     <Wrapper>
@@ -58,6 +45,14 @@ const Home = ({ hasDataCreated }: { hasDataCreated: boolean }) => {
             <Content>
               <Typography variant="h6" >Faça o upload do arquivo CSV</Typography>
               <Uploader name="file" />
+              <SelectFieldWrapper>
+                <label>Selecione o ano da CEAP</label>
+                <Field as="select" name="year">
+                  <option value="2020">2020</option>
+                  <option value="2021">2021</option>
+                  <option value="2022">2022</option>
+                </Field>
+              </SelectFieldWrapper>
               <div>
                 <Button size="massive" onClick={handleSubmit} disabled={isSubmitting}>Enviar</Button>
               </div>
@@ -68,13 +63,12 @@ const Home = ({ hasDataCreated }: { hasDataCreated: boolean }) => {
       {loading && (
         <div>
           <Typography color="#1976d2">Os dados estão sendo carregados...</Typography>
-          <Typography marginTop="30px">Isso pode demorar um pouco</Typography>
+          <Typography color="#1976d2" marginBottom="30px">Por favor, aguarde!</Typography>
           <Loader />
         </div>
       )}
-      {isCreatedData && (
+      {hasDataCreated && !loading && (
         <>
-          <Typography marginTop="30px">Verificamos que alguns dados já foram carregados</Typography>
           <Link href='/deputados'>Clique aqui para visualizar os deputudos</Link>
         </>
       )}

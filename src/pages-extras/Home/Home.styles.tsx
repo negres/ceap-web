@@ -39,7 +39,6 @@ export const Content = styled.div`
 export const SelectFieldWrapper = styled.div`
   margin-top: 30px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
 
   select {
@@ -48,5 +47,6 @@ export const SelectFieldWrapper = styled.div`
     padding: 5px;
     border: 2px solid #24b988;
     border-radius: 5px;
+    margin-left: 10px;
   }
 `;
